@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA Question Bank — El-Shorouk Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #0a0c10;
+  --surface:  #111318;
+  --surface2: #191d26;
+  --surface3: #1f2433;
+  --border:   #262c3a;
+  --border2:  #2e3650;
+
+  --text:     #e8ecf4;
+  --text2:    #8b95b0;
+  --text3:    #505870;
+
+  --blue:     #4d9fff;
+  --blue-bg:  #0c1e3a;
+  --green:    #3dd68c;
+  --green-bg: #0d2e1d;
+  --orange:   #f0a943;
+  --orange-bg:#2e1e08;
+  --red:      #f06060;
+  --red-bg:   #2e0f0f;
+  --purple:   #a78bfa;
+  --purple-bg:#1e1540;
+  --teal:     #38c9c9;
+  --teal-bg:  #082626;
+
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'Syne', sans-serif;
+  --body: 'Inter', sans-serif;
+  --radius: 6px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 15px; }
+
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.65;
+}
+
+/* ── GRID ── */
+.app { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.logo-area {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.logo-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--blue);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+}
+.logo-title {
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+.logo-sub {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 4px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.stat-cell {
+  background: var(--surface);
+  padding: 12px 14px;
+  text-align: center;
+}
+.stat-n {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+}
+.stat-l {
+  font-size: 10px;
+  color: var(--text3);
+  margin-top: 3px;
+  letter-spacing: 0.5px;
+}
+
+nav { padding: 16px 12px; flex: 1; }
+.nav-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--text3);
+  text-transform: uppercase;
+  padding: 0 8px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text2);
+  font-family: var(--body);
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: all 0.12s;
+  margin-bottom: 2px;
+  text-align: left;
+}
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active { background: var(--surface3); color: var(--text); }
+.nav-item.active .nav-dot { opacity: 1; }
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  opacity: 0.3;
+  transition: opacity 0.12s;
+}
+.nav-item span:last-child {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+}
+
+/* ── MAIN ── */
+.main { padding: 32px 40px; max-width: 900px; }
+
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── SECTION HEADER ── */
+.sec-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.sec-title {
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.sec-sub {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 4px;
+  font-family: var(--mono);
+}
+.sec-badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* ── SEARCH ── */
+.search-wrap { margin-bottom: 20px; }
+.search-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 9px 14px;
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.search-input:focus { border-color: var(--blue); }
+.search-input::placeholder { color: var(--text3); }
+
+/* ── CARD ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  transition: border-color 0.15s;
+}
+.card:hover { border-color: var(--border2); }
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.q-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  background: var(--surface2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+.badge {
+  font-size: 10px;
+  font-family: var(--mono);
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+.badge-year { background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
+.badge-exam { background: #1c1a08; color: #d4b840; border: 1px solid #3a3010; }
+.badge-rev  { background: #0d1e30; color: #5599cc; border: 1px solid #1a3a58; }
+.badge-hot  { background: var(--red-bg); color: var(--red); border: 1px solid rgba(240,96,96,0.3); }
+.badge-repeat { background: #1a1028; color: #9b72cf; border: 1px solid #2e2040; }
+
+.q-body {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  margin-bottom: 12px;
+}
+
+/* ── OPTIONS ── */
+.options { margin: 8px 0 10px; display: grid; gap: 5px; }
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  color: var(--text2);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+}
+.opt.correct {
+  color: var(--green);
+  background: var(--green-bg);
+  border-color: rgba(61,214,140,0.25);
+}
+.opt-ltr {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  width: 20px; height: 20px;
+  border-radius: 4px;
+  background: var(--surface3);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--text3);
+  border: 1px solid var(--border);
+}
+.opt.correct .opt-ltr {
+  background: rgba(61,214,140,0.15);
+  color: var(--green);
+  border-color: rgba(61,214,140,0.3);
+}
+
+/* ── TOGGLE BUTTON ── */
+.toggle-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 6px 14px;
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  background: var(--surface2);
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.12s;
+  letter-spacing: 0.5px;
+}
+.toggle-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+/* ── ANSWER BOX ── */
+.ans-box {
+  display: none;
+  margin-top: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.ans-box.open { display: block; }
+.ans-header {
+  background: var(--green-bg);
+  border: 1px solid rgba(61,214,140,0.2);
+  padding: 6px 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--green);
+  letter-spacing: 1px;
+}
+.ans-body {
+  background: #0b1e14;
+  border: 1px solid rgba(61,214,140,0.15);
+  border-top: none;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--text);
+  white-space: pre-wrap;
+  line-height: 1.8;
+}
+
+/* ── CODE BLOCK ── */
+pre {
+  font-family: var(--mono);
+  font-size: 12px;
+  background: #050709;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  white-space: pre;
+  line-height: 1.7;
+  color: #c9d1e0;
+  margin: 8px 0;
+}
+
+/* ── TF BADGES ── */
+.tf-true  { background: var(--green-bg); color: var(--green); border: 1px solid rgba(61,214,140,0.3); }
+.tf-false { background: var(--red-bg);   color: var(--red);   border: 1px solid rgba(240,96,96,0.3); }
+
+/* ── NOTE BOX ── */
+.note-box {
+  background: var(--orange-bg);
+  border: 1px solid rgba(240,169,67,0.25);
+  border-radius: 5px;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: var(--orange);
+  margin-bottom: 12px;
+  font-family: var(--mono);
+  letter-spacing: 0.3px;
+}
+
+/* ── TN SECTION ── */
+.tn-step {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--orange);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin: 6px 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+  white-space: pre-wrap;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+@media (max-width: 768px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; }
+  .main { padding: 20px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ══ SIDEBAR ══ -->
+<aside class="sidebar">
+  <div class="logo-area">
+    <span class="logo-tag">CS201 / 2102</span>
+    <div class="logo-title">Data Structure<br>Question Bank</div>
+    <div class="logo-sub">El-Shorouk Academy · Dr. Osama Shafik</div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-cell"><div class="stat-n" style="color:var(--blue)">69</div><div class="stat-l">MCQ</div></div>
+    <div class="stat-cell"><div class="stat-n" style="color:var(--green)">30</div><div class="stat-l">True/False</div></div>
+    <div class="stat-cell"><div class="stat-n" style="color:var(--purple)">22</div><div class="stat-l">Essay</div></div>
+    <div class="stat-cell"><div class="stat-n" style="color:var(--teal)">16</div><div class="stat-l">Code</div></div>
+    <div class="stat-cell" style="grid-column:1/-1"><div class="stat-n" style="color:var(--orange)">2</div><div class="stat-l">T(n) Analysis</div></div>
+  </div>
+
+  <nav>
+    <span class="nav-label">Sections</span>
+    <button class="nav-item active" onclick="show('mcq',this)">
+      <span class="nav-dot" style="background:var(--blue)"></span>
+      MCQ
+      <span>69</span>
+    </button>
+    <button class="nav-item" onclick="show('tf',this)">
+      <span class="nav-dot" style="background:var(--green)"></span>
+      True / False
+      <span>30</span>
+    </button>
+    <button class="nav-item" onclick="show('essay',this)">
+      <span class="nav-dot" style="background:var(--purple)"></span>
+      Essay & Tracing
+      <span>22</span>
+    </button>
+    <button class="nav-item" onclick="show('code',this)">
+      <span class="nav-dot" style="background:var(--teal)"></span>
+      Code Questions
+      <span>16</span>
+    </button>
+    <button class="nav-item" onclick="show('tn',this)">
+      <span class="nav-dot" style="background:var(--orange)"></span>
+      T(n) Complexity
+      <span>2</span>
+    </button>
+  </nav>
+</aside>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+
+<!-- ═══════════ MCQ ═══════════ -->
+<div id="mcq" class="section active">
+  <div class="sec-head">
+    <div>
+      <div class="sec-title" style="color:var(--blue)">MCQ</div>
+      <div class="sec-sub">Multiple Choice Questions — All Years & Lectures</div>
+    </div>
+    <span class="sec-badge" style="background:var(--blue-bg);color:var(--blue);border:1px solid rgba(77,159,255,0.2)">69 Questions</span>
+  </div>
+  <div class="search-wrap">
+    <input class="search-input" type="text" placeholder="Search MCQ questions..." oninput="filterSection('mcq-list', this.value)">
+  </div>
+  <div id="mcq-list"></div>
+</div>
+
+<!-- ═══════════ TRUE/FALSE ═══════════ -->
+<div id="tf" class="section">
+  <div class="sec-head">
+    <div>
+      <div class="sec-title" style="color:var(--green)">True / False</div>
+      <div class="sec-sub">Statements covering all topics</div>
+    </div>
+    <span class="sec-badge" style="background:var(--green-bg);color:var(--green);border:1px solid rgba(61,214,140,0.2)">30 Questions</span>
+  </div>
+  <div id="tf-list"></div>
+</div>
+
+<!-- ═══════════ ESSAY ═══════════ -->
+<div id="essay" class="section">
+  <div class="sec-head">
+    <div>
+      <div class="sec-title" style="color:var(--purple)">Essay & Tracing</div>
+      <div class="sec-sub">Purpose, Tracing, BST, Graph, Recursion</div>
+    </div>
+    <span class="sec-badge" style="background:var(--purple-bg);color:var(--purple);border:1px solid rgba(167,139,250,0.2)">22 Questions</span>
+  </div>
+  <div id="essay-list"></div>
+</div>
+
+<!-- ═══════════ CODE ═══════════ -->
+<div id="code" class="section">
+  <div class="sec-head">
+    <div>
+      <div class="sec-title" style="color:var(--teal)">Code Questions</div>
+      <div class="sec-sub">Write clean, complete C# code</div>
+    </div>
+    <span class="sec-badge" style="background:var(--teal-bg);color:var(--teal);border:1px solid rgba(56,201,201,0.2)">16 Questions</span>
+  </div>
+  <div id="code-list"></div>
+</div>
+
+<!-- ═══════════ T(N) ═══════════ -->
+<div id="tn" class="section">
+  <div class="sec-head">
+    <div>
+      <div class="sec-title" style="color:var(--orange)">T(n) / Complexity</div>
+      <div class="sec-sub">Asymptotic Analysis — Step-by-Step Solutions</div>
+    </div>
+    <span class="sec-badge" style="background:var(--orange-bg);color:var(--orange);border:1px solid rgba(240,169,67,0.2)">2 Questions</span>
+  </div>
+  <div id="tn-list"></div>
+</div>
+
+</main>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
+
+const MCQ = [
+  // ── EXAM Questions ──
+  {src:"exam", y:"2023", hot:true,
+   q:"What is the best data structure to check whether an arithmetic expression has balanced parenthesis?",
+   opts:["Array","Queue","Stack","Linked List"], ans:2},
+
+  {src:"exam", y:"2025", hot:true,
+   q:"In a stack, the operation to remove an element is called:",
+   opts:["Push","Pop","Peek","Enqueue"], ans:1},
+
+  {src:"exam", y:"2025", hot:true,
+   q:"The time complexity of searching in a BST in the worst case is:",
+   opts:["O(1)","O(log n)","O(n)","O(n log n)"], ans:2},
+
+  {src:"exam", y:"2025", hot:true,
+   q:"Which traversal visits the root node last?",
+   opts:["Preorder","Inorder","Postorder","Level order"], ans:2},
+
+  {src:"exam", y:"2025",
+   q:"The Big-O notation for f(n) = 3n² + 4n + 15 is:",
+   opts:["O(n)","O(n log n)","O(n²)","O(2ⁿ)"], ans:2},
+
+  {src:"exam", y:"2025", hot:true,
+   q:"Which data structure uses FIFO (First-In-First-Out) principle?",
+   opts:["Stack","Queue","Linked List","Tree"], ans:1},
+
+  {src:"exam", y:"2025",
+   q:"In asymptotic analysis, the upper bound of an algorithm's running time is represented by:",
+   opts:["Ω (Omega)","Θ (Theta)","O (Big-O)","None"], ans:2},
+
+  {src:"exam", y:"2025",
+   q:"What is the worst-case time complexity of inserting an element into an unsorted array?",
+   opts:["O(1)","O(log n)","O(n)","O(n²)"], ans:0},
+
+  {src:"exam", y:"2025", hot:true,
+   q:"What is the time complexity to insert at the head of a linked list?",
+   opts:["O(1)","O(n)","O(log n)","O(n²)"], ans:0},
+
+  {src:"exam", y:"2025",
+   q:"Recursion is based on:",
+   opts:["Loops","Function calls","Pointers","Arrays"], ans:1},
+
+  {src:"exam", y:"2025",
+   q:"How do you reverse a singly linked list?",
+   opts:["By swapping data","By reversing the pointers","By using a stack","Both b and c"], ans:3},
+
+  {src:"exam", y:"2025", hot:true,
+   q:"In a binary search tree, the left subtree of a node contains:",
+   opts:["Values greater than the node","Values less than the node","Values equal to the node","Random values"], ans:1},
+
+  {src:"exam", y:"2025",
+   q:"What is the space complexity of an adjacency matrix for a graph with V vertices?",
+   opts:["O(V)","O(V²)","O(E)","O(V log V)"], ans:1},
+
+  {src:"exam", y:"2025", hot:true,
+   q:"Which data structure is used for DFS traversal?",
+   opts:["Queue","Stack","Linked List","Tree"], ans:1},
+
+  {src:"exam", y:"2025",
+   q:"What is the time complexity of the Tower of Hanoi problem?",
+   opts:["O(n)","O(n²)","O(2ⁿ)","O(log n)"], ans:2},
+
+  {src:"exam", y:"2025",
+   q:"Which of the following is NOT a type of graph?",
+   opts:["Directed","Undirected","Weighted","Stacked"], ans:3},
+
+  // ── MCQ BANK ──
+  {src:"", y:"MCQ Bank", hot:true,
+   q:"The heap is a general-purpose area of storage organized so that chunks of memory can be allocated and freed at random. What is it called?",
+   opts:["Stack","Heap","Queue","Garbage Collector"], ans:1},
+
+  {src:"", y:"MCQ Bank", hot:true,
+   q:"A path in a graph is a sequence of:",
+   opts:["Isolated vertices","Adjacent vertices","Random nodes","Edges only"], ans:1},
+
+  {src:"", y:"MCQ Bank", hot:true,
+   q:"Data types in C# are two types:",
+   opts:["Static and Dynamic","Value types and Reference types","Int and Float","None"], ans:1},
+
+  {src:"", y:"MCQ Bank", hot:true,
+   q:"In the .NET Framework, the special CLR component that looks after memory management is called a:",
+   opts:["Compiler","Garbage Collector","Stack Frame","Activation Record"], ans:1},
+
+  {src:"", y:"MCQ Bank", hot:true,
+   q:"Activation record (stack frame) contains:",
+   opts:["Heap address","The return address to the calling method","Local classes","None"], ans:1},
+
+  {src:"", y:"MCQ Bank",
+   q:"A block of memory for storing local variables and parameters is called:",
+   opts:["Heap","Queue","Stack","Tree"], ans:2},
+
+  {src:"", y:"MCQ Bank",
+   q:"A primitive data structure in C# that encapsulates small groups of related variables is:",
+   opts:["Class","Interface","Struct","Array"], ans:2},
+
+  {src:"", y:"MCQ Bank",
+   q:"A linear data structure where elements are linked using pointers:",
+   opts:["Array","Stack","Linked List","Graph"], ans:2},
+
+  // ── LECTURE 1 ──
+  {src:"", y:"Lecture 1",
+   q:"Which of the following is a primitive data structure?",
+   opts:["Array","Graph","Integer","Tree"], ans:2},
+
+  {src:"", y:"Lecture 1",
+   q:"What does LIFO stand for?",
+   opts:["Last In First Out","First In First Out","Least In First Out","None"], ans:0},
+
+  {src:"", y:"Lecture 1",
+   q:"A queue follows which order?",
+   opts:["FILO","LIFO","FIFO","Random"], ans:2},
+
+  {src:"", y:"Lecture 1",
+   q:"In a linked list, each node contains:",
+   opts:["Only data","Only a link","Data and pointer","Data and index"], ans:2},
+
+  {src:"", y:"Lecture 1",
+   q:"Which data structure uses push and pop operations?",
+   opts:["Array","Queue","Stack","Graph"], ans:2},
+
+  {src:"", y:"Lecture 1",
+   q:"Which is not a primitive data type?",
+   opts:["int","float","char","array"], ans:3},
+
+  {src:"", y:"Lecture 1",
+   q:"The node with no parent in a tree is called:",
+   opts:["Subnode","Leaf","Root","Internal node"], ans:2},
+
+  {src:"", y:"Lecture 1",
+   q:"A tree node can have at most ___ children in a binary tree.",
+   opts:["1","2","3","4"], ans:1},
+
+  // ── LECTURE 2 ──
+  {src:"", y:"Lecture 2",
+   q:"What does the stack store?",
+   opts:["Global variables","Objects","Local variables and parameters","Strings"], ans:2},
+
+  {src:"", y:"Lecture 2",
+   q:"What is stored in the heap?",
+   opts:["Value types","Local variables","Primitive types","Objects like strings"], ans:3},
+
+  {src:"", y:"Lecture 2",
+   q:"Reference types store:",
+   opts:["The actual value","The memory address of the value","Static values","Global constants"], ans:1},
+
+  {src:"", y:"Lecture 2",
+   q:"Stack overflow occurs when:",
+   opts:["The heap is full","Too many method calls fill the stack","A variable exceeds its size","A loop is infinite"], ans:1},
+
+  {src:"", y:"Lecture 2",
+   q:"Value types are stored:",
+   opts:["In the heap","In the class","In the stack","In the global space"], ans:2},
+
+  // ── LECTURE 3 ──
+  {src:"", y:"Lecture 3",
+   q:"Big-O notation expresses:",
+   opts:["Lower Bound","Upper Bound","Average Bound","None"], ans:1},
+
+  {src:"", y:"Lecture 3",
+   q:"Time complexity of nested loops: for(i=0;i<n;i++) for(j=0;j<n;j++) is:",
+   opts:["O(n)","O(log n)","O(n²)","O(2n)"], ans:2},
+
+  {src:"", y:"Lecture 3",
+   q:"f(n) = 3n² + 4n + 15 simplifies to:",
+   opts:["O(n²)","O(n³)","O(n log n)","O(n)"], ans:0},
+
+  {src:"", y:"Lecture 3",
+   q:"Big-O notation ignores:",
+   opts:["Constant terms","Leading term","Fastest-growing term","Loop iterations"], ans:0},
+
+  // ── LECTURE 4 ──
+  {src:"", y:"Lecture 4",
+   q:"What is a struct in C#?",
+   opts:["Reference type","Value type","Class","Interface"], ans:1},
+
+  {src:"", y:"Lecture 4",
+   q:"Where are arrays stored in memory?",
+   opts:["Stack","Register","Heap","ROM"], ans:2},
+
+  {src:"", y:"Lecture 4",
+   q:"What exception is thrown when accessing an invalid array index?",
+   opts:["NullReferenceException","FormatException","System.IndexOutOfRangeException","DivideByZeroException"], ans:2},
+
+  {src:"", y:"Lecture 4",
+   q:"Structs in C# inherit from:",
+   opts:["System.Object","System.Array","System.ValueType","System.Exception"], ans:2},
+
+  // ── LECTURE 5 ──
+  {src:"", y:"Lecture 5",
+   q:"A linked list uses ______ to link elements.",
+   opts:["Arrays","Indexes","Pointers","Stacks"], ans:2},
+
+  {src:"", y:"Lecture 5",
+   q:"Linked lists allocate memory:",
+   opts:["Statically","Dynamically","Linearly","Randomly"], ans:1},
+
+  {src:"", y:"Lecture 5",
+   q:"The starting node of a linked list is called:",
+   opts:["Root","Top","Head","Tail"], ans:2},
+
+  {src:"", y:"Lecture 5",
+   q:"Which operation is faster in linked lists than arrays?",
+   opts:["Indexing","Insertion/Deletion","Random access","Sorting"], ans:1},
+
+  // ── LECTURE 7 ──
+  {src:"", y:"Lecture 7", hot:true,
+   q:"Which operation inserts data into a stack?",
+   opts:["Add","Insert","Push","Enqueue"], ans:2},
+
+  {src:"", y:"Lecture 7",
+   q:"What is the result of a pop operation on a stack?",
+   opts:["Removes last inserted","Removes first inserted","Adds new element","None"], ans:0},
+
+  {src:"", y:"Lecture 7", hot:true,
+   q:"In array-based stack implementation, the default value of top when empty is:",
+   opts:["0","1","-1","NULL"], ans:2},
+
+  // ── LECTURE 8 ──
+  {src:"", y:"Lecture 8",
+   q:"What is the base case in recursion?",
+   opts:["A case that is not solvable","A case solved without recursion","A complex case","A loop"], ans:1},
+
+  {src:"", y:"Lecture 8",
+   q:"What happens if there is no base case in recursion?",
+   opts:["Program ends normally","Nothing happens","Infinite recursion","Compiles with error"], ans:2},
+
+  {src:"", y:"Lecture 8",
+   q:"What is sum(5) expressed recursively?",
+   opts:["5 + 6","5 * 4","5 + sum(4)","sum(6)"], ans:2},
+
+  // ── LECTURE 9 ──
+  {src:"", y:"Lecture 9",
+   q:"What is the maximum number of nodes at level i in a binary tree?",
+   opts:["i","i²","2i","2^i"], ans:3},
+
+  {src:"", y:"Lecture 9",
+   q:"A node with no children is called:",
+   opts:["Parent","Leaf","Root","Ancestor"], ans:1},
+
+  {src:"", y:"Lecture 9",
+   q:"The number of edges in a binary tree with n nodes is:",
+   opts:["n+1","n-1","n/2","2n"], ans:1},
+
+  {src:"", y:"Lecture 9", hot:true,
+   q:"In a BST, if a node has two children, the deleted node is replaced with:",
+   opts:["Root","Leaf","Inorder successor","Sibling"], ans:2},
+
+  {src:"", y:"Lecture 9", hot:true,
+   q:"Which traversal is used to get sorted data in a BST?",
+   opts:["Preorder","Postorder","Inorder","Level-order"], ans:2},
+
+  // ── LECTURE 10 ──
+  {src:"", y:"Lecture 10",
+   q:"What is a graph?",
+   opts:["A tree structure","A binary search","A pair of vertices and edges","None"], ans:2},
+
+  {src:"", y:"Lecture 10",
+   q:"Which graph has all directed edges?",
+   opts:["Undirected Graph","Directed Graph","Sparse Graph","Complete Graph"], ans:1},
+
+  {src:"", y:"Lecture 10",
+   q:"A self-loop connects:",
+   opts:["Two different vertices","A vertex to itself","No vertices","Multiple graphs"], ans:1},
+
+  {src:"", y:"Lecture 10",
+   q:"The degree of a vertex in an undirected graph is:",
+   opts:["Sum of weights","Number of paths","Number of edges incident on it","Always 2"], ans:2},
+
+  {src:"", y:"Lecture 10",
+   q:"A cycle is:",
+   opts:["A type of tree","A path where first and last vertices are the same","A disconnected graph","None of these"], ans:1},
+];
+
+// ── TRUE / FALSE ──
+const TF = [
+  {q:"A stack follows LIFO (Last In First Out) principle.", ans:true},
+  {q:"A queue follows LIFO principle.", ans:false, exp:"Queue follows FIFO (First In First Out)."},
+  {q:"Value types in C# are stored in the heap.", ans:false, exp:"Value types are stored in the STACK."},
+  {q:"Reference types in C# store the memory address of the value.", ans:true},
+  {q:"The heap is used for dynamic memory allocation.", ans:true},
+  {q:"Stack overflow occurs when too many method calls fill the call stack.", ans:true},
+  {q:"In a BST, the left subtree contains values greater than the root.", ans:false, exp:"Left subtree contains values LESS than the root."},
+  {q:"Inorder traversal of a BST produces sorted (ascending) output.", ans:true},
+  {q:"Postorder traversal visits the root LAST.", ans:true},
+  {q:"Preorder traversal visits the root FIRST.", ans:true},
+  {q:"Big-O notation represents the upper bound of an algorithm's running time.", ans:true},
+  {q:"The time complexity of inserting at the head of a linked list is O(n).", ans:false, exp:"It is O(1) — just update the head pointer."},
+  {q:"Adjacency Matrix always consumes O(V²) space.", ans:true},
+  {q:"The Adjacency List is more space-efficient than Adjacency Matrix for sparse graphs.", ans:true},
+  {q:"DFS (Depth First Search) uses a Queue as its data structure.", ans:false, exp:"DFS uses a Stack. BFS uses a Queue."},
+  {q:"BFS (Breadth First Search) uses a Stack as its data structure.", ans:false, exp:"BFS uses a Queue. DFS uses a Stack."},
+  {q:"A leaf node in a tree has no children.", ans:true},
+  {q:"The root node in a tree has no parent.", ans:true},
+  {q:"A binary tree node can have at most 3 children.", ans:false, exp:"A binary tree node can have at most 2 children."},
+  {q:"The garbage collector in .NET manages memory in the heap.", ans:true},
+  {q:"Struct in C# is a reference type.", ans:false, exp:"Struct is a VALUE type in C#."},
+  {q:"Linked lists allocate memory dynamically.", ans:true},
+  {q:"Arrays in C# are stored in the heap.", ans:true},
+  {q:"Recursion without a base case causes infinite recursion.", ans:true},
+  {q:"The time complexity of searching in a BST in the worst case is O(n).", ans:true, exp:"Worst case (unbalanced tree) is O(n). Average is O(log n)."},
+  {q:"The number of edges in a binary tree with n nodes is n+1.", ans:false, exp:"It is n-1 edges."},
+  {q:"A cycle is a path where the first and last vertices are the same.", ans:true},
+  {q:"A self-loop connects a vertex to itself.", ans:true},
+  {q:"The minimum value in a BST is found at the rightmost node.", ans:false, exp:"Minimum is at the LEFTMOST node."},
+  {q:"Activation record (stack frame) contains the return address to the calling method.", ans:true},
+];
+
+// ── ESSAY / TRACING ──
+const ESSAY = [
+  {src:"exam", y:"2021",
+   q:`What is the purpose of the following code?\n\nstatic void WhatIsMyName(string word) {\n    StackArray stack = new StackArray();\n    foreach (char c in word)\n        stack.push(c);\n    while (!stack.isEmpty())\n        Console.Write(stack.pop());\n    Console.WriteLine();\n}`,
+   ans:`PURPOSE: Prints the input string REVERSED.\n\nEXPLANATION:\n  - Each character is pushed onto the stack one by one.\n  - Stack is LIFO, so popping returns characters from last to first.\n  - Result: the word is printed backwards.\n\nExample: "hello" → output: "olleh"`},
+
+  {src:"exam", y:"2021 / 2024",
+   q:`What is the purpose of the following code?\n\npublic void func2(int data) {\n    LinkedListNode temp = new LinkedListNode();\n    temp.data = data;\n    temp.next = head;\n    head = temp;\n}`,
+   ans:`PURPOSE: Inserts a new node at the FRONT (head) of a linked list.\n\nEXPLANATION:\n  1. Create a new node.\n  2. Set its data.\n  3. Point new node's next to the current head.\n  4. Update head to point to the new node.\n\nTime Complexity: O(1)`},
+
+  {src:"exam", y:"2021",
+   q:`What is the purpose of the following code?\n\npublic void WhatIsMyName(int data) {\n    Node temp = new Node();\n    temp.data = data;\n    if (head == null) { head = temp; return; }\n    Node p = head;\n    while (p.next != null) p = p.next;\n    p.next = temp;\n    temp.next = null;\n}`,
+   ans:`PURPOSE: Inserts a new node at the END (tail) of the linked list.\n\nEXPLANATION:\n  1. Create a new node with the given data.\n  2. If list is empty, set it as head and return.\n  3. Otherwise, traverse to the last node (p.next == null).\n  4. Attach the new node at the end.\n\nTime Complexity: O(n) — must traverse the full list.`},
+
+  {src:"exam", y:"2021 / 2024",
+   q:`What does the following code do to a linked list?\n\nvoid fun1(Node head) {\n    if (head == null) return;\n    fun1(head.Next);\n    Console.WriteLine(head.Value);\n}`,
+   ans:`PURPOSE: Prints the linked list data in REVERSE order.\n\nEXPLANATION:\n  - The function recurses all the way to the last node FIRST.\n  - Then prints on the way BACK (after recursive call).\n  - This reverses the printing order without modifying the list.`},
+
+  {src:"exam", y:"2022",
+   q:`What is the purpose of this BST function?\n\npublic Node fun1(Node p) {\n    if (p == null) return null;\n    while (p.left != null)\n        p = p.left;\n    return p;\n}`,
+   ans:`PURPOSE: Finds the node with the MINIMUM value in the BST.\n\nEXPLANATION:\n  - In a BST, the smallest value is always at the leftmost node.\n  - The function keeps going left until there is no left child.\n  - Returns that node.\n\nTime Complexity: O(h) where h = height of tree.`},
+
+  {src:"exam", y:"2021 / 2022",
+   q:`What is the purpose of this BST function?\n\npublic Node WhatIsMyName(Node p, int x) {\n    while (p != null) {\n        if (x < p.data) p = p.left;\n        else if (x > p.data) p = p.right;\n        else return p;\n    }\n    return null;\n}`,
+   ans:`PURPOSE: Searches for the node with data = x in the BST.\n\nEXPLANATION:\n  - Go left if x is smaller than current node.\n  - Go right if x is larger than current node.\n  - Return the node if found, or null if not found.\n\nTime Complexity: O(h) average, O(n) worst case (unbalanced tree).`},
+
+  {src:"exam", y:"2019/2020",
+   q:`What does fun2 do to the queue?\n\nvoid fun2(Queue<int> Q) {\n    Stack<int> S = new Stack<int>();\n    while (!Q.isEmpty())\n        S.push(Q.deQueue());\n    while (!S.isEmpty())\n        Q.enQueue(S.pop());\n}`,
+   ans:`PURPOSE: Reverses the order of all elements in the Queue.\n\nEXPLANATION:\n  Step 1 — Dequeue all elements into a Stack (reverses order once).\n  Step 2 — Pop all elements from Stack back into Queue (reverses again → net: full reverse).\n\nExample: Queue [1,2,3,4] → after fun2 → Queue [4,3,2,1]`},
+
+  {src:"exam", y:"2021",
+   q:`Write the algorithm for Depth First Search (DFS) traversal of a graph.`,
+   ans:`DFS ALGORITHM (using Stack):\n\n  1. Push the starting (source) node onto the stack.\n  2. Loop while the stack is not empty:\n       a. Pop the top node → call it CURRENT.\n       b. Visit/process CURRENT (e.g., print it).\n       c. Push all unvisited neighbors of CURRENT onto the stack.\n  3. Repeat until the stack is empty.\n\nData Structure used: STACK (LIFO)\nTime Complexity: O(V + E)  where V = vertices, E = edges.`},
+
+  {src:"exam", y:"2022 / 2024",
+   q:`What are the advantages and disadvantages of Adjacency Matrix for representing a Graph?\nWhat is the alternative representation?`,
+   ans:`ADJACENCY MATRIX\n\n  Advantages:\n    ✓ Simple to implement\n    ✓ Add/Remove edge → O(1)\n    ✓ Check if edge exists → O(1)\n\n  Disadvantages:\n    ✗ Always consumes O(V²) space\n    ✗ Inefficient for sparse graphs (wastes memory)\n    ✗ Adding a new vertex is expensive\n\nALTERNATIVE: Adjacency List\n  - Space: O(V + E) — much better for sparse graphs\n  - Iterate all neighbors of a vertex: O(degree)  `},
+
+  {src:"exam", y:"2023",
+   q:`What are the two most common ways to represent a Graph?\nWhat are the two main traversal techniques?`,
+   ans:`GRAPH REPRESENTATIONS:\n  1. Adjacency Matrix  → 2D array, O(V²) space\n  2. Adjacency List   → array of lists, O(V+E) space\n\nGRAPH TRAVERSAL TECHNIQUES:\n  1. DFS — Depth First Search    → uses a STACK\n  2. BFS — Breadth First Search  → uses a QUEUE`},
+
+  {src:"exam", y:"2022 / 2024",
+   q:`Given a tree with 22 nodes (root = T):\n  1. What is node T called?\n  2. How many leaf nodes are there?\n  3. What is the height of the tree?\n  4. What is the level of node Q?\n  5. What is the maximum possible height if nodes are arranged freely?`,
+   ans:`1. Node T = ROOT NODE (the root has no parent)\n2. Leaf nodes = 11 (nodes with no children)\n3. Height = 4 (length of longest root-to-leaf path)\n4. Level of Q = 1 (direct child of root)\n5. Maximum height = 21  (= n - 1 = 22 - 1)  → linear/degenerate tree`},
+
+  {src:"exam", y:"2022",
+   q:`What is the maximum number of distinct binary trees that can be formed with 3 unlabeled nodes? Draw all of them.`,
+   ans:`Answer: 5 distinct binary trees  (Catalan number C(3) = 5)\n\nThe 5 shapes:\n\n  1)    o          2)    o          3)    o          4)    o          5)    o\n       /                /                / \\                \\                \\\n      o                o                o   o               o                o\n     /                  \\                                   /                  \\\n    o                    o                                 o                   o\n\n  (Left-Left)   (Left-Right)   (Full/Both)   (Right-Left)   (Right-Right)`},
+
+  {src:"exam", y:"2022",
+   q:`The postorder traversal of a BST gives: 1, 3, 2, 8, 10, 5, 4\nDraw the original BST.`,
+   ans:`APPROACH: In postorder, the LAST element is always the ROOT.\n  → Root = 4\n  → Reconstruct recursively from there.\n\nRESULTING BST:\n\n         4\n        / \\\n       2    5\n      / \\     \\\n     1   3    10\n              /\n             8\n\nVERIFICATION — Postorder (L→R→Root):\n  1 → 3 → 2 → 8 → 10 → 5 → 4  ✓`},
+
+  {src:"exam", y:"2023",
+   q:`TRACING — What is the output of fun(3)?\n\nstatic int fun(int n) {\n    if (n == 5) return n;\n    else return 2 * fun(n + 1);\n}`,
+   ans:`TRACE:\n  fun(3) = 2 × fun(4)\n  fun(4) = 2 × fun(5)\n  fun(5) = 5           ← base case\n\nUNWIND:\n  fun(4) = 2 × 5  = 10\n  fun(3) = 2 × 10 = 20\n\n  OUTPUT: 20`},
+
+  {src:"exam", y:"2022",
+   q:`TRACING — What is the output of the following code?\n\nint fun2(int x, int y) {\n    if (x == 0) return y;\n    return fun2(x - 1, x + y);\n}\nConsole.WriteLine(fun2(4, 3));`,
+   ans:`TRACE:\n  fun2(4, 3) → fun2(3, 7)\n  fun2(3, 7) → fun2(2, 10)\n  fun2(2,10) → fun2(1, 12)\n  fun2(1,12) → fun2(0, 13)\n  fun2(0,13) → return 13   ← base case\n\n  OUTPUT: 13`},
+
+  {src:"exam", y:"2022",
+   q:`TRACING — What is the output of the following code?\n\nint fun1(int n) {\n    if (n == 4) return n;\n    else return 2 * fun1(n + 1);\n}\nConsole.WriteLine(fun1(2));`,
+   ans:`TRACE:\n  fun1(2) = 2 × fun1(3)\n  fun1(3) = 2 × fun1(4)\n  fun1(4) = 4             ← base case\n\nUNWIND:\n  fun1(3) = 2 × 4  = 8\n  fun1(2) = 2 × 8  = 16\n\n  OUTPUT: 16`},
+
+  {src:"exam", y:"2023 / 2025",
+   q:`TRACING — What is the output of the following code?\n\nint[] values = { 4, 17, 1, 7, 9, 24, 13, 18, 3, 19 };\nStack<int> s = new Stack<int>();\nfor (int i = 0; i < values.Length; i++) s.Push(values[i]);\nint n = 26;\nfor (int i = 0; i < 5; i++) n += s.Pop();\nfor (int i = 0; i < 3; i++) n -= s.Pop();\nConsole.WriteLine(n);`,
+   ans:`STACK after all pushes (top → bottom): 19, 3, 18, 13, 24, 9, 7, 1, 17, 4\n\nLoop 1 — Pop 5 and ADD:\n  n = 26 + 19 + 3 + 18 + 13 + 24 = 103\n\nStack remaining (top → bottom): 9, 7, 1, 17, 4\n\nLoop 2 — Pop 3 and SUBTRACT:\n  n = 103 - 9 - 7 - 1 = 86\n\n  OUTPUT: 86`},
+
+  {src:"exam", y:"2022",
+   q:`TRACING — What is the output of the following code?\n\nint[] values = { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 };\nStack<int> s = new Stack<int>();\nfor (int i = 0; i < values.Length; i++) s.Push(values[i]);\nint n = 25;\nfor (int i = 0; i < 4; i++) n += s.Pop();\nfor (int i = 0; i < 2; i++) n -= s.Pop();\nConsole.WriteLine(n);`,
+   ans:`STACK after all pushes (top → bottom): 19, 17, 15, 13, 11, 9, 7, 5, 3, 1\n\nLoop 1 — Pop 4 and ADD:\n  n = 25 + 19 + 17 + 15 + 13 = 89\n\nStack remaining: 11, 9, 7, 5, 3, 1\n\nLoop 2 — Pop 2 and SUBTRACT:\n  n = 89 - 11 - 9 = 69\n\n  OUTPUT: 69`},
+
+  {src:"", y:"BST Practice",
+   q:`Build a BST by inserting keys in this order:\n76, 12, 56, 31, 199, 17, 40, 76, 75\n\nWhat is the height of the resulting tree?`,
+   ans:`RESULTING BST:\n\n           76\n          /   \\\n        12    199\n          \\\n          56\n         /  \\\n        31   76 (duplicate)\n       /  \\  /\n      17  40 75\n\nHeight = 5\n(Longest path: 76 → 12 → 56 → 31 → 17)`},
+
+  {src:"", y:"Traversals",
+   q:`Given the following BST:\n\n        15\n       /  \\\n     10    20\n    / \\   /  \\\n   8  12 16  25\n\nWrite the Preorder, Inorder, and Postorder traversals.`,
+   ans:`PREORDER   (Root → Left → Right):\n  15, 10, 8, 12, 20, 16, 25\n\nINORDER    (Left → Root → Right):  ← gives SORTED output in BST!\n  8, 10, 12, 15, 16, 20, 25\n\nPOSTORDER  (Left → Right → Root):\n  8, 12, 10, 16, 25, 20, 15`},
+
+  {src:"exam", y:"2019/2020",
+   q:`TRACING — What is the output of smile(25)? What is its purpose?\n\npublic static void smile(int n) {\n    ListStack<int> s = new ListStack<int>();\n    while (n > 0) {\n        s.push(n % 2);\n        n = n / 2;\n    }\n    while (!s.isEmpty)\n        Console.Write(s.pop());\n    Console.WriteLine();\n}`,
+   ans:`TRACE for smile(25):\n  25 % 2 = 1 → push 1,  n = 12\n  12 % 2 = 0 → push 0,  n = 6\n   6 % 2 = 0 → push 0,  n = 3\n   3 % 2 = 1 → push 1,  n = 1\n   1 % 2 = 1 → push 1,  n = 0\n\nStack (top → bottom): 1, 1, 0, 0, 1\nPop all → print: 1 1 0 0 1\n\n  OUTPUT: 11001\n\nVERIFICATION: 25 in binary = 11001  ✓\n\nPURPOSE: Converts a decimal integer to its BINARY representation and prints it.`},
+
+  {src:"exam", y:"2019/2020",
+   q:`Essay — Graph Representations:\nDraw how a directed graph is represented using both methods. Discuss the advantages and disadvantages of each.`,
+   ans:`Given directed graph — Nodes: 1, 2, 3, 4\nEdges: 1→2, 1→4, 2→3, 3→4\n\n────────────────────────────────\n1) ADJACENCY MATRIX\n────────────────────────────────\n     1  2  3  4\n 1 [ 0  1  0  1 ]\n 2 [ 0  0  1  0 ]\n 3 [ 0  0  0  1 ]\n 4 [ 0  0  0  0 ]\n\n  ✓ Simple to implement\n  ✓ Add/Remove/Check edge → O(1)\n  ✗ Always O(V²) space — bad for sparse graphs\n\n────────────────────────────────\n2) ADJACENCY LIST\n────────────────────────────────\n  1 → [2, 4]\n  2 → [3]\n  3 → [4]\n  4 → []\n\n  ✓ O(V + E) space — much better for sparse graphs\n  ✓ Efficiently iterate all neighbors\n  ✗ Checking if edge (u,v) exists → O(degree of u)`},
+];
+
+// ── CODE ──
+const CODE = [
+  {src:"exam", y:"2021",
+   q:`Write the push() method for an array-based Stack implementation.`,
+   ans:`public void push(int x)\n{\n    if (isFull())\n    {\n        Console.WriteLine("Stack Overflow");\n        return;\n    }\n    top = top + 1;\n    data[top] = x;\n}`},
+
+  {src:"exam", y:"2023",
+   q:`Complete the missing statements in the pop() method of StackArray:\n\nclass StackArray {\n    int top;\n    int[] data;\n\n    public int pop() {\n        int x;\n        if (isEmpty()) { /* --- MISSING --- */ }\n        /* --- MISSING --- */\n    }\n}`,
+   ans:`public int pop()\n{\n    int x;\n    if (isEmpty())\n    {\n        Console.WriteLine("Stack Underflow");\n        return int.MinValue;\n    }\n    x = data[top];\n    top = top - 1;\n    return x;\n}`},
+
+  {src:"exam", y:"2023 / 2022",
+   q:`Write the enqueue() method for a Queue implemented using a Linked List.\n\nclass QueueLinkedList {\n    Node front, rear;\n    public QueueLinkedList() { front = rear = null; }\n\n    public void enqueue(int item) { /* your code here */ }\n}`,
+   ans:`public void enqueue(int item)\n{\n    Node temp = new Node();\n    temp.data = item;\n    temp.next = null;\n\n    if (front == null)   // Queue is empty\n        front = temp;\n    else\n        rear.next = temp;\n\n    rear = temp;\n}`},
+
+  {src:"exam", y:"2022",
+   q:`Write the dequeue() method for a Queue implemented using a Linked List.\n\npublic int dequeue() { /* your code here */ }`,
+   ans:`public int dequeue()\n{\n    int item;\n    if (isEmpty())\n    {\n        Console.WriteLine("Queue Underflow");\n        return int.MinValue;\n    }\n    item = front.data;\n    front = front.next;\n    return item;\n}`},
+
+  {src:"exam", y:"2021 / 2024",
+   q:`Write a method to count the total number of nodes in a singly linked list.\n\npublic int count() { /* your code here */ }`,
+   ans:`public int count()\n{\n    int cnt = 0;\n    Node p = head;\n    while (p != null)\n    {\n        cnt++;\n        p = p.next;\n    }\n    return cnt;\n}`},
+
+  {src:"exam", y:"2021",
+   q:`Write a method reverse(int[] a) that prints the elements of an integer array in reverse order.`,
+   ans:`void reverse(int[] a)\n{\n    for (int index = 0; index < a.Length; index++)\n        Console.WriteLine(a[a.Length - index - 1]);\n}`},
+
+  {src:"exam", y:"2023",
+   q:`Write a method int find(int x) that searches a singly linked list for value x.\nReturn the 1-based position if found, or int.MinValue if not found.`,
+   ans:`public int search(int x)\n{\n    Node p = head;\n    int pos = 1;\n    while (p != null)\n    {\n        if (p.data == x)\n            return pos;\n        p = p.next;\n        pos++;\n    }\n    return int.MinValue;\n}`},
+
+  {src:"exam", y:"2023",
+   q:`Write a non-recursive method Node search(Node p, int x) to search for value x in a BST.\nReturn the node if found, or null if not found.`,
+   ans:`public Node search(Node p, int x)\n{\n    while (p != null)\n    {\n        if (x < p.data)\n            p = p.left;\n        else if (x > p.data)\n            p = p.right;\n        else\n            return p;     // Found!\n    }\n    return null;          // Not found\n}`},
+
+  {src:"exam", y:"2024",
+   q:`Write BOTH:\n  a) push(int value) for an array-based Stack\n  b) int dequeue() for a linked-list Queue`,
+   ans:`// ─── a) push — array-based Stack ───\npublic void push(int x)\n{\n    if (isFull())\n    {\n        Console.WriteLine("Stack Overflow");\n        return;\n    }\n    top = top + 1;\n    data[top] = x;\n}\n\n// ─── b) dequeue — linked-list Queue ───\npublic int dequeue()\n{\n    int item;\n    if (isEmpty())\n    {\n        Console.WriteLine("Queue Underflow");\n        return int.MinValue;\n    }\n    item = front.data;\n    front = front.next;\n    return item;\n}`,
+   note:"Repeated concept: push and dequeue appear individually in other questions above."},
+
+  {src:"exam", y:"2024",
+   q:`Write a method int linearSearch(int[] arr, int value) that returns the index of value in arr, or -1 if not found.`,
+   ans:`public static int linearSearch(int[] arr, int value)\n{\n    int size = arr.Length;\n    for (int i = 0; i < size; i++)\n    {\n        if (value == arr[i])\n            return i;\n    }\n    return -1;\n}`},
+
+  {src:"exam", y:"2019/2020",
+   q:`Write a method void bubbleSort(int[] arr) to sort an integer array using bubble sort.`,
+   ans:`void bubbleSort(int[] arr)\n{\n    int temp;\n    for (int x = 0; x < arr.Length; x++)\n    {\n        for (int y = 0; y < arr.Length - 1 - x; y++)\n        {\n            if (arr[y] > arr[y + 1])\n            {\n                temp = arr[y + 1];\n                arr[y + 1] = arr[y];\n                arr[y] = temp;\n            }\n        }\n    }\n}`},
+
+  {src:"exam", y:"2019/2020",
+   q:`Write a method int binarySearch(int[] arr, int value) to search a SORTED array.\nReturn the index if found, or -1 if not found.`,
+   ans:`public int binarySearch(int[] arr, int value)\n{\n    int low = 0, high = arr.Length - 1;\n    while (low <= high)\n    {\n        int mid = (low + high) / 2;\n        if (arr[mid] == value) return mid;\n        else if (arr[mid] < value) low = mid + 1;\n        else high = mid - 1;\n    }\n    return -1;\n}`},
+
+  {src:"exam", y:"2019",
+   q:`Write a recursive method void PrintInBinary(int num) that prints the binary representation of a non-negative integer.\n\nExample: PrintInBinary(5) → prints 101`,
+   ans:`void PrintInBinary(int num)\n{\n    if (num == 0) return;          // base case: stop recursion\n    PrintInBinary(num / 2);        // recurse on quotient first\n    Console.Write(num % 2);        // print remainder on the way back\n}\n\n// Trace for PrintInBinary(5):\n// PrintInBinary(5) → PrintInBinary(2) → PrintInBinary(1) → PrintInBinary(0)\n//                                                             return\n//                                               print 1\n//                               print 0\n// print 1\n// Output: 101  ✓`},
+
+  {src:"exam", y:"2023",
+   q:`Write a method void separate(int[] input, int[] even, int[] odd) that separates even and odd numbers from the input array.\n\nExample:\n  input = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}\n  → even = {2, 4, 6, 8, 10}\n  → odd  = {1, 3, 5, 7, 9}`,
+   ans:`void separate(int[] input, int[] even, int[] odd)\n{\n    int eIndex = 0, oIndex = 0;\n    for (int i = 0; i < input.Length; i++)\n    {\n        if (input[i] % 2 == 0)\n            even[eIndex++] = input[i];\n        else\n            odd[oIndex++] = input[i];\n    }\n}`},
+
+  {src:"exam", y:"2022",
+   q:`Write a method void insertAfter(Node p, int new_data) that inserts new_data into a DOUBLY linked list after node p (if p is not null).`,
+   ans:`void insertAfter(Node p, int new_data)\n{\n    if (p == null) return;\n\n    Node temp = new Node();\n    temp.data = new_data;\n\n    temp.next = p.next;       // new node points forward\n    temp.prev = p;             // new node points backward\n\n    if (p.next != null)\n        p.next.prev = temp;    // next node points back to new node\n\n    p.next = temp;             // p points forward to new node\n}`},
+
+  {src:"exam", y:"2019/2020",
+   q:`Write a generic method to swap two values of any type.\n\n// Example usage:\n// int x = 5, y = 10;\n// Swap<int>(ref x, ref y);\n// Result: x=10, y=5`,
+   ans:`static void Swap<T>(ref T a, ref T b)\n{\n    T temp = a;\n    a = b;\n    b = temp;\n}\n\n// Usage:\nint x = 5, y = 10;\nSwap<int>(ref x, ref y);\n// x = 10, y = 5`},
+];
+
+// ── T(N) ──
+const TN = [
+  {src:"exam", y:"2022/2023 — 10 marks",
+   note:"⭐ HIGH PRIORITY — Repeated every year",
+   q:`Determine the Big-O notation for each function:\n\nfun1:  while (i > 0) { m++; i = i/2; }          // i starts at n\n\nfun2:  for(i=0; i<n; i++)\n         for(j=0; j<Math.Sqrt(n); j++) m++;\n\nfun3:  for(i=0; i<n; i++)\n         for(j=0; j<n; j++) m++;\n\nfun4:  for(i=0; i<n; i++) for(j=0; j<n; j++) m++;\n       for(i=0; i<n; i++) for(k=0; k<n; k++) m++;\n\nfun11: for(i=0; i<n; i++)\n         for(j=1; j<n; j++)\n           for(k=1; k<n; k++) m++;`,
+   ans:`fun1   → O(log n)\n         The while loop divides i by 2 each iteration → logarithmic growth.\n\nfun2   → O(n · √n)  =  O(n^1.5)\n         Outer loop: n times × Inner loop: √n times = n^(3/2).\n\nfun3   → O(n²)\n         n × n = n².\n\nfun4   → O(n²)\n         n×n + n×n = 2n² → drop the constant → O(n²).\n\nfun11  → O(n³)\n         Three nested loops, each running n times = n³.`},
+
+  {src:"exam", y:"2021/2022 — 12 marks",
+   note:"⭐ HIGH PRIORITY — Practice step-by-step T(n) calculation",
+   q:`Calculate T(n) and Big-O step by step for each algorithm:\n\nAlgorithm A:\nSomeAlgorithm(int n) {\n  Input                              // Step 1\n  for(i=0; i<n; i++)                // outer loop\n  {\n    for(i=n-1; i>=1; i/=2)          // inner loop 1: halving\n      Arithmetic operation\n    for(j=0; j<n; j++)              // inner loop 2\n      Comparison\n  }\n  Arithmetic operation               // Step A\n  Output                             // Step B\n}\n\nAlgorithm B:\nSomeAlgorithm(int n) {\n  for(i=0; i<n; i++)\n    for(i=n-1; i>=1; i/=2)\n      Arithmetic operation\n  if(some condition) {\n    for(i=0; i<n; i++)\n      for(j=0; j<n; j++) Comparison\n  } else {\n    for(i=0; i<n; i++) Arithmetic Operation\n  }\n}`,
+   ans:`ALGORITHM A — Step by Step:\n\n  Input                      → 1\n  Outer for (n times):\n    Inner for 1 (halving)    → log n per outer iteration\n    Inner for 2 (j < n)      → n per outer iteration\n  Cost per outer iteration   → log n + n\n  Total for all outer iters  → n × (log n + n) = n·log n + n²\n  Arithmetic operation       → 1\n  Output                     → 1\n\n  T(n) = n² + n·log n + 3\n\n  Big-O = O(n²)  ← n² dominates\n\n══════════════════════════════════════\n\nALGORITHM B — Step by Step:\n\n  Outer loop + inner halving → n × log n  =  n·log n\n\n  Worst case of if/else branch:\n    if  branch → n × n   = n²\n    else branch → n\n    → Take the worst = n²\n\n  T(n) = n·log n + n²\n\n  Big-O = O(n²)  ← n² dominates`},
+];
+
+// ══════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════
+let revealed = {};
+
+function toggle(id) {
+  revealed[id] = !revealed[id];
+  const box = document.getElementById('a-' + id);
+  const btn = document.getElementById('b-' + id);
+  if (revealed[id]) {
+    box.classList.add('open');
+    btn.textContent = '▲ HIDE ANSWER';
+  } else {
+    box.classList.remove('open');
+    btn.textContent = '▼ SHOW ANSWER';
+  }
+}
+
+function srcBadge(src) {
+  if (src === 'exam') return '<span class="badge badge-exam">exam</span>';
+  if (src === 'rev')  return '<span class="badge badge-rev">rev</span>';
+  return '';
+}
+
+function renderMCQ() {
+  const el = document.getElementById('mcq-list');
+  el.innerHTML = MCQ.map((q,i) => {
+    const opts = q.opts.map((o,j) =>
+      `<div class="opt${j===q.ans?' correct':''}">
+        <div class="opt-ltr">${j===q.ans?'✓':String.fromCharCode(65+j)}</div>
+        <span>${o}</span>
+      </div>`
+    ).join('');
+    return `<div class="card" data-search="${q.q.toLowerCase()} ${q.y.toLowerCase()}">
+      <div class="card-top">
+        <span class="q-num">Q${i+1}</span>
+        <span class="badge badge-year">${q.y}</span>
+        ${srcBadge(q.src)}
+        ${q.hot?'<span class="badge badge-hot">⭐ Repeated</span>':''}
+      </div>
+      <div class="q-body">${q.q}</div>
+      <button class="toggle-btn" id="b-m${i}" onclick="toggle('m${i}')">▼ SHOW ANSWER</button>
+      <div class="ans-box" id="a-m${i}">
+        <div class="ans-header">CORRECT ANSWER</div>
+        <div class="ans-body"><div class="options">${opts}</div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderTF() {
+  const el = document.getElementById('tf-list');
+  el.innerHTML = TF.map((q,i) => {
+    const badge = q.ans
+      ? '<span class="badge tf-true">✓ TRUE</span>'
+      : '<span class="badge tf-false">✗ FALSE</span>';
+    return `<div class="card">
+      <div class="card-top"><span class="q-num">Q${i+1}</span></div>
+      <div class="q-body">${q.q}</div>
+      <button class="toggle-btn" id="b-t${i}" onclick="toggle('t${i}')">▼ SHOW ANSWER</button>
+      <div class="ans-box" id="a-t${i}">
+        <div class="ans-header">ANSWER</div>
+        <div class="ans-body">${badge}${q.exp?`\n\n<span style="color:var(--text2);font-size:12px">${q.exp}</span>`:''}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderEssay() {
+  const el = document.getElementById('essay-list');
+  el.innerHTML = ESSAY.map((q,i) => `
+    <div class="card">
+      <div class="card-top">
+        <span class="q-num">Q${i+1}</span>
+        <span class="badge badge-year">${q.y}</span>
+        ${srcBadge(q.src)}
+      </div>
+      <div class="q-body">${q.q}</div>
+      <button class="toggle-btn" id="b-e${i}" onclick="toggle('e${i}')">▼ SHOW ANSWER</button>
+      <div class="ans-box" id="a-e${i}">
+        <div class="ans-header">FULL ANSWER</div>
+        <div class="ans-body">${q.ans}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderCode() {
+  const el = document.getElementById('code-list');
+  el.innerHTML = CODE.map((q,i) => `
+    <div class="card">
+      <div class="card-top">
+        <span class="q-num">Q${i+1}</span>
+        <span class="badge badge-year">${q.y}</span>
+        ${srcBadge(q.src)}
+        ${q.note?'<span class="badge badge-repeat">↩ Repeated concept</span>':''}
+      </div>
+      <div class="q-body">${q.q}</div>
+      <button class="toggle-btn" id="b-c${i}" onclick="toggle('c${i}')">▼ SHOW CODE</button>
+      <div class="ans-box" id="a-c${i}">
+        <div class="ans-header">CLEAN CODE</div>
+        <div class="ans-body"><pre>${q.ans}</pre>${q.note?`<div style="margin-top:8px;font-size:11px;color:var(--text3);font-family:var(--mono)">NOTE: ${q.note}</div>`:''}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderTN() {
+  const el = document.getElementById('tn-list');
+  el.innerHTML = TN.map((q,i) => `
+    <div class="card">
+      <div class="card-top">
+        <span class="q-num">Q${i+1}</span>
+        <span class="badge badge-year">${q.y}</span>
+        ${srcBadge(q.src)}
+        <span class="badge badge-hot">⭐ High Priority</span>
+      </div>
+      ${q.note?`<div class="note-box">⚠ ${q.note}</div>`:''}
+      <div class="q-body">${q.q}</div>
+      <button class="toggle-btn" id="b-n${i}" onclick="toggle('n${i}')">▼ SHOW SOLUTION</button>
+      <div class="ans-box" id="a-n${i}">
+        <div class="ans-header">STEP-BY-STEP SOLUTION</div>
+        <div class="ans-body"><pre style="background:transparent;border:none;padding:0">${q.ans}</pre></div>
+      </div>
+    </div>`).join('');
+}
+
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function filterSection(listId, val) {
+  document.querySelectorAll(`#${listId} .card`).forEach(card => {
+    const text = (card.dataset.search || card.textContent).toLowerCase();
+    card.style.display = text.includes(val.toLowerCase()) ? '' : 'none';
+  });
+}
+
+// Init
+renderMCQ();
+renderTF();
+renderEssay();
+renderCode();
+renderTN();
+</script>
+</body>
+</html>
